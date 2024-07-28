@@ -16,16 +16,18 @@ enum AppNetwork<Response: Codable & Sendable> {
     }
 
     static func post(
-        data: some Codable,
+        dto: some Codable,
         url: URL
     ) async -> NetworkResult<Response> {
         var request = URLRequest(url: url)
-        do {
-            request.httpBody = try JSONEncoder().encode(data)
-        } catch {
-            return .failure(.jsonEncodingError(error.localizedDescription, request))
+        var requestData: Data
+        switch encode(model: dto, forRequest: request) {
+        case let .success(data):
+            requestData = data
+        case let .failure(error):
+            return .failure(error)
         }
-
+        request.httpBody = requestData
         return await performAndDecode(request: &request, method: .POST)
     }
 }
@@ -82,7 +84,19 @@ extension AppNetwork {
         } catch {
             return .failure(.jsonDecodingError(error.localizedDescription, request))
         }
-
         return .success(responseDTO.data)
+    }
+
+    private static func encode(
+        model: some Codable,
+        forRequest request: URLRequest
+    ) -> NetworkResult<Data> {
+        let data: Data
+        do {
+            data = try JSONEncoder().encode(model)
+        } catch {
+            return .failure(.jsonEncodingError(error.localizedDescription, request))
+        }
+        return .success(data)
     }
 }
