@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D77DDEFD2C5606A20031DD5D /* NetworkLayerGenericsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77DDEFC2C5606A20031DD5D /* NetworkLayerGenericsApp.swift */; };
-		D77DDEFF2C5606A20031DD5D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77DDEFE2C5606A20031DD5D /* ContentView.swift */; };
+		D77DDEFF2C5606A20031DD5D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77DDEFE2C5606A20031DD5D /* RootView.swift */; };
 		D77DDF012C5606A30031DD5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D77DDF002C5606A30031DD5D /* Assets.xcassets */; };
 		D77DDF042C5606A30031DD5D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D77DDF032C5606A30031DD5D /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		D77DDEF92C5606A20031DD5D /* NetworkLayerGenerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkLayerGenerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D77DDEFC2C5606A20031DD5D /* NetworkLayerGenericsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayerGenericsApp.swift; sourceTree = "<group>"; };
-		D77DDEFE2C5606A20031DD5D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D77DDEFE2C5606A20031DD5D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		D77DDF002C5606A30031DD5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D77DDF032C5606A30031DD5D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				D77DDEFC2C5606A20031DD5D /* NetworkLayerGenericsApp.swift */,
-				D77DDEFE2C5606A20031DD5D /* ContentView.swift */,
+				D77DDEFE2C5606A20031DD5D /* RootView.swift */,
 				D77DDF002C5606A30031DD5D /* Assets.xcassets */,
 				D77DDF022C5606A30031DD5D /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D77DDEFF2C5606A20031DD5D /* ContentView.swift in Sources */,
+				D77DDEFF2C5606A20031DD5D /* RootView.swift in Sources */,
 				D77DDEFD2C5606A20031DD5D /* NetworkLayerGenericsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
