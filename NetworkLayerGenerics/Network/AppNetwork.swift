@@ -10,11 +10,6 @@ import Foundation
 typealias NetworkResult<Response> = Result<Response, NetworkError>
 
 enum AppNetwork<Response: Codable & Sendable> {
-    private enum HTTPMethod: String {
-        case GET
-        case POST
-    }
-
     static func get(url: URL) async -> NetworkResult<Response> {
         var request = URLRequest(url: url)
         return await performAndDecode(request: &request, method: .GET)
@@ -26,8 +21,7 @@ enum AppNetwork<Response: Codable & Sendable> {
     ) async -> NetworkResult<Response> {
         var request = URLRequest(url: url)
         do {
-            let data = try JSONEncoder().encode(data)
-            request.httpBody = data
+            request.httpBody = try JSONEncoder().encode(data)
         } catch {
             return .failure(.jsonEncodingError(error.localizedDescription, request))
         }
@@ -37,6 +31,11 @@ enum AppNetwork<Response: Codable & Sendable> {
 }
 
 extension AppNetwork {
+    private enum HTTPMethod: String {
+        case GET
+        case POST
+    }
+
     private static func performAndDecode(
         request: inout URLRequest,
         method: HTTPMethod
@@ -53,7 +52,7 @@ extension AppNetwork {
             return .failure(error)
         }
 
-        return decode(data: requestData, forRequest: request, model: Response.self)
+        return decode(data: requestData, forRequest: request)
     }
 
     private static func perform(request: URLRequest) async -> NetworkResult<Data> {
@@ -75,8 +74,7 @@ extension AppNetwork {
 
     private static func decode<Model: Codable>(
         data: Data,
-        forRequest request: URLRequest,
-        model _: Model.Type
+        forRequest request: URLRequest
     ) -> NetworkResult<Model> {
         let responseDTO: ResponseDTO<Model>
         do {
