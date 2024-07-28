@@ -13,12 +13,11 @@ struct ResponseDTO<Response: Codable>: Codable {
 }
 
 struct LoginDTO: Codable {
+    var id: String
+    var first_name: String
+    var last_name: String
     var username: String
-    var password: String
+    var email: String
 }
 
-struct Login: Codable {
-    var username: String
-    var password: String
-    var followerCount: Int
-}
+typealias Login = LoginDTO

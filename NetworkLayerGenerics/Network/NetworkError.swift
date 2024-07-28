@@ -11,8 +11,34 @@ enum NetworkError: LocalizedError {
     case notImplemented
     case transportError(String)
     case jsonEncodingError(String, URLRequest)
-    case jsonDecodingError(String, URLRequest)
+    case jsonDecodingError(DecodingError?, URLRequest)
     case httpError(ResponseCode, URLResponse)
+
+    var fullDescription: String {
+        switch self {
+        case .notImplemented: "Not Implemented"
+        case let .transportError(info): "Transport error: \(info)"
+        case .jsonEncodingError: "Encoding error"
+        case let .jsonDecodingError(error, _):
+            if let error {
+                switch error {
+                case let .typeMismatch(_, context):
+                    context.underlyingError.debugDescription
+                case let .valueNotFound(_, context):
+                    context.underlyingError.debugDescription
+                case let .keyNotFound(_, context):
+                    context.underlyingError.debugDescription
+                case let .dataCorrupted(context):
+                    context.underlyingError.debugDescription
+                @unknown default:
+                    fatalError()
+                }
+            } else {
+                "Unknown error"
+            }
+        case let .httpError(responseCode, _): "HTTP error \(responseCode.description)"
+        }
+    }
 }
 
 enum ResponseCode: Int {
@@ -21,5 +47,9 @@ enum ResponseCode: Int {
 
     var isError: Bool {
         [.notFound].contains(self)
+    }
+
+    var description: String {
+        "\(rawValue) \(self)"
     }
 }

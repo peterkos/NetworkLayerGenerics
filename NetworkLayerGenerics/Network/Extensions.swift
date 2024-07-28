@@ -25,3 +25,15 @@ extension URLSession {
         return (data, response as! HTTPURLResponse)
     }
 }
+
+extension DefaultStringInterpolation {
+    mutating func appendInterpolation(
+        optional value: (some Any)?
+    ) {
+        if let value {
+            appendInterpolation(value)
+        } else {
+            appendInterpolation("?")
+        }
+    }
+}

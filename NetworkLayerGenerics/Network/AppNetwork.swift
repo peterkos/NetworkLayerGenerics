@@ -15,10 +15,7 @@ enum AppNetwork<Response: Codable & Sendable> {
         return await performAndDecode(request: &request, method: .GET)
     }
 
-    static func post(
-        dto: some Codable,
-        url: URL
-    ) async -> NetworkResult<Response> {
+    static func post(dto: some Codable, url: URL) async -> NetworkResult<Response> {
         var request = URLRequest(url: url)
         var requestData: Data
         switch encode(model: dto, forRequest: request) {
@@ -78,11 +75,15 @@ extension AppNetwork {
         data: Data,
         forRequest request: URLRequest
     ) -> NetworkResult<Model> {
+        let decoder = JSONDecoder()
+
         let responseDTO: ResponseDTO<Model>
         do {
-            responseDTO = try JSONDecoder().decode(ResponseDTO<Model>.self, from: data)
+            responseDTO = try decoder.decode(ResponseDTO<Model>.self, from: data)
+        } catch let error as DecodingError {
+            return .failure(.jsonDecodingError(error, request))
         } catch {
-            return .failure(.jsonDecodingError(error.localizedDescription, request))
+            return .failure(.jsonDecodingError(nil, request))
         }
         return .success(responseDTO.data)
     }
